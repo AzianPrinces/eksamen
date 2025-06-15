@@ -1,0 +1,165 @@
+
+/* Buttons */
+.mfx-button {
+    -fx-background-color: #004b88;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.mfx-button:hover {
+    -fx-background-color: #006FCB;
+}
+
+/* Labels*/
+Label{
+    -fx-text-fill: black;
+}
+
+.orderLabel {
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+.whiteLabel {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-content-display: right;
+}
+
+.right-aligned-label {
+    -fx-alignment: CENTER_RIGHT;
+    -fx-text-alignment: RIGHT;
+}
+
+.positionLabel {
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+/* Text field*/
+MFXTextField {
+    -fx-border-color: #004b88;
+    -fx-font-size: 14px;
+}
+ /* Password field*/
+MFXPasswordField {
+    -fx-border-color: #004b88;
+    -fx-font-size: 14px;
+}
+
+/* TableView*/
+.table-view {
+    -fx-border-color: #004b88;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #004b88;
+}
+
+.table-view .column-header,
+.table-view .filler {
+    -fx-background-color: #004b88;
+    -fx-border-color: #004b88;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: #7fa8c5;
+    -fx-text-fill: black;
+}
+
+.table-view .table-row-cell:selected .text {
+    -fx-fill: black;
+}
+
+/* Content Menu*/
+.ContextMenu{
+    -fx-text-fill: black;
+}
+
+.context-menu .menu-item:hover {
+    -fx-background-color: #7fa8c5;
+    -fx-text-fill: white;
+}
+
+.context-menu .menu-item:focused {
+    -fx-background-color: #7fa8c5;
+    -fx-text-fill: white;
+}
+
+/* ListView*/
+ListView {
+    -fx-font-size: 16px;
+}
+
+ListView:focused {
+    -fx-border-color: #004b88;
+}
+
+ListView .list-cell:hover {
+    -fx-background-color: #e3e3e3;
+    -fx-text-fill: black;
+}
+
+ListView .list-cell:selected {
+    -fx-background-color: #7fa8c5;
+    -fx-text-fill: white;
+}
+
+ListView .list-cell:selected:hover {
+    -fx-background-color: #e3e3e3;
+    -fx-text-fill: black;
+}
+
+/* CheckBox*/
+.mfx-checkbox .mfx-ripple-generator {
+    -mfx-ripple-color: #004b88;
+}
+
+.mfx-checkbox:selected .box {
+    -fx-background-color: #004b88;
+    -fx-border-color: #004b88;
+}
+
+/* Radio button*/
+.mfx-radio-button .mfx-ripple-generator {
+    -mfx-ripple-color: #004b88;
+}
+
+/*ComboBox*/
+ComboBox {
+    -fx-border-color: white;
+    -fx-font-weight: bold;
+    -fx-background-color: #004b88;
+    -fx-font-size: 16px;
+    -fx-text-fill: white;
+}
+
+ComboBox .list-cell:selected {
+    -fx-text-fill: white;
+}
+
+.combo-box .arrow-button .arrow {
+    -fx-background-color: white;
+}
+
+.combo-box . virtual-flow .list-cell:selected {
+    -fx-background-color: #7fa8c5;
+}
+
+.combo-box .virtual-flow .list-cell:hover {
+    -fx-background-color: #e3e3e3;
+    -fx-text-fill: black;
+}
+
+.combo-box .virtual-flow .list-cell:selected .label {
+    -fx-text-fill: white;
+}

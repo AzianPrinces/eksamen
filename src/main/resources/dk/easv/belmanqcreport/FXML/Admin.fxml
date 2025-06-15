@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" stylesheets="/dk/easv/belmanqcreport/CSS/CSS.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.belmanqcreport.GUI.Controller.AdminController">
+
+    <!-- Top area (can be like a title bar) -->
+    <top>
+        <BorderPane prefHeight="37.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+
+            <padding>
+                <Insets bottom="0" left="20" right="20" top="0" />
+            </padding>
+            <!-- LEFT SIDE -->
+            <left>
+                <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="174.0" spacing="10.0" style="-fx-background-color: #004b88;">
+                    <ImageView fx:id="logoImage" fitHeight="30" fitWidth="30" />
+               <MFXButton fx:id="btnBack" onAction="#btnBack" />
+                </HBox>
+            </left>
+
+            <!-- CENTER -->
+            <center>
+                <HBox alignment="CENTER" prefHeight="30.0" prefWidth="561.0" spacing="10.0" style="-fx-background-color: #004b88;" />
+            </center>
+
+            <!-- RIGHT SIDE -->
+            <right>
+                <HBox alignment="CENTER_RIGHT" spacing="5.0" style="-fx-background-color: #004b88;">
+                    <Label fx:id="lblEmployee" alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="148.0" style="-fx-font-size: 14px;" styleClass="whiteLabel" />
+               <MFXButton fx:id="btnLogout" onAction="#btnLogout" prefHeight="26.0" prefWidth="37.0" />
+                </HBox>
+            </right>
+         <top>
+            <HBox prefHeight="12.0" prefWidth="560.0" BorderPane.alignment="CENTER" />
+         </top>
+         <bottom>
+            <HBox prefHeight="10.0" prefWidth="560.0" BorderPane.alignment="CENTER" />
+         </bottom>
+
+        </BorderPane>
+    </top>
+    <center>
+        <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <top>
+                <HBox alignment="BOTTOM_LEFT" prefHeight="56.0" prefWidth="1354.0" BorderPane.alignment="CENTER" />
+            </top>
+            <bottom>
+                <HBox prefHeight="46.0" prefWidth="597.0" BorderPane.alignment="CENTER" />
+            </bottom>
+         <left>
+            <VBox alignment="CENTER" prefHeight="638.0" prefWidth="526.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label minHeight="30.0" styleClass="orderLabel" text="List of Employees">
+                           <HBox.margin>
+                              <Insets bottom="10.0" left="91.0" />
+                           </HBox.margin>
+                        </Label>
+                              <MFXTextField fx:id="txtSearch" alignment="BOTTOM_LEFT" maxHeight="30.0" minHeight="22.0" prefHeight="30.0" prefWidth="145.0" promptText="Search">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                              </MFXTextField>
+                     </children>
+                  </HBox>
+                      <TableView fx:id="tblEmployee" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="395.0">
+                          <columns>
+                              <TableColumn fx:id="colId" prefWidth="75.0" text="ID" />
+                              <TableColumn fx:id="colFName" prefWidth="75.0" text="First Name" />
+                              <TableColumn fx:id="colLName" prefWidth="75.0" text="Last Name" />
+                              <TableColumn fx:id="colRole" prefWidth="75.0" text="Role" />
+                              <TableColumn fx:id="colActive" prefWidth="75.0" text="Active" />
+                          </columns>
+                     <VBox.margin>
+                        <Insets bottom="40.0" left="50.0" />
+                     </VBox.margin>
+                      </TableView>
+               </children>
+            </VBox>
+         </left>
+         <right>
+            <VBox prefHeight="681.0" prefWidth="970.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox prefHeight="40.0" prefWidth="798.0">
+                     <children>
+                        <Label styleClass="orderLabel" text="Order Number">
+                           <HBox.margin>
+                              <Insets left="86.0" top="3.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label styleClass="orderLabel" text="Order Item">
+                           <HBox.margin>
+                              <Insets left="14.0" top="3.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label styleClass="orderLabel" text="Log">
+                           <HBox.margin>
+                              <Insets left="41.0" top="3.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                      <HBox alignment="CENTER" prefHeight="600.0" prefWidth="991.0">
+                     <children>
+                        <ListView fx:id="lstOrder" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="120.0" />
+                        <ListView fx:id="lstItem" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="120.0">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </ListView>
+                        <ListView fx:id="lstLog" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="543.0">
+                           <HBox.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </HBox.margin>
+                        </ListView>
+                     </children>
+                      </HBox>
+               </children>
+            </VBox>
+         </right>
+        </BorderPane>
+    </center>
+
+    <left>
+      <HBox prefHeight="362.0" prefWidth="3.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <HBox prefHeight="362.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
+   </right>
+
+</BorderPane>
