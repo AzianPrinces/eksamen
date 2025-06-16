@@ -29,11 +29,5 @@ public class LogModel {
         return manager.getLogsForItem(orderItemId);
     }
 
-    public void addLogSafe(int orderItemId, String imagePosition, String action, String user) {
-        try {
-            addLog(orderItemId, imagePosition, action, user);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 }

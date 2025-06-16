@@ -123,7 +123,7 @@ public class ImageRepository implements IRepository<MyImage> {
         return list;
     }
 
-    public void updateValidationType(int orderItemID, int validationTypeID) throws SQLException {
+   /* public void updateValidationType(int orderItemID, int validationTypeID) throws SQLException {
 
         String sql = "UPDATE Item SET validationTypeID = ? WHERE orderItemID = ?;";
 
@@ -137,7 +137,7 @@ public class ImageRepository implements IRepository<MyImage> {
         }catch (SQLException e) {
             throw new SQLException("Error updating validation type " + validationTypeID, e);
         }
-    }
+    }*/
 
     public int getValidationTypeByOrderItemID(int orderItemID) throws SQLException {
 

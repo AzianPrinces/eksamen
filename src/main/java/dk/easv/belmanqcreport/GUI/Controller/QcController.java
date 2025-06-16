@@ -45,6 +45,8 @@ import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class QcController implements Initializable {
@@ -111,40 +113,49 @@ public class QcController implements Initializable {
     private boolean batchDenySelected    = false;
 
     private final Map<Position, MyImage> imagesByPosition = new EnumMap<>(Position.class);
+
     private final Map<Position, Rectangle> imagePanesOverlay = new EnumMap<>(Position.class);
+
     private Map<Position, StackPane> getPaneByPosition;
-    private String orderNumber;
-    private String orderItem;
+
+
+    private static final Logger logger = Logger.getLogger(QcController.class.getName());
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        // models
         imageHandlingModel = new ImageHandlingModel();
         try {
             logModel = new LogModel();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException("Failed to initialize LogModel", e);
         }
-
         try {
             imageModel = new ImageModel();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException("Failed to initialize ImageModel", e);
         }
 
 
+        // init icons
         setIcons();
 
+        //init log list
         lstLog.setItems(logItems);
 
-        initializeCheckBoxes();
+        //init Check buttons
+        initializeCheckButtons();
 
+        //pop lists
         try {
             populateLists();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Failed to populate lists", e);
+            showAlert(Alert.AlertType.ERROR, "Failed to populate lists!");
         }
+
 
         getPaneByPosition = Map.of(
                 Position.TOP, imageTop,
@@ -161,7 +172,7 @@ public class QcController implements Initializable {
 
     }
 
-    private void initializeCheckBoxes() {
+    private void initializeCheckButtons() {
 
         setButtonIcon(btnPDFSave, "/dk/easv/belmanqcreport/Icons/pdf.png", 50, 50);
         Node pdfIcon = btnPDFSave.getGraphic();
@@ -250,10 +261,11 @@ public class QcController implements Initializable {
                             deniedItems.add(item);
                         }
                     }
-                    lstItem.refresh(); //
+                    lstItem.refresh();
 
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.log(Level.SEVERE, "Failed to load items", e);
+                    showAlert( Alert.AlertType.ERROR, "Failed to load items for order: " + selOrder.getOrderNumber());
                 }
             } else {
                 lstItem.getItems().clear();
@@ -263,11 +275,12 @@ public class QcController implements Initializable {
         lstItem.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem) -> {
             if (newItem != null) {
 
-                loadImagesForItem(newItem.getOrderItemId());
                 try {
+                    loadImagesForItem(newItem.getOrderItemId());
                     loadLogList(newItem.getOrderItemId());
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.log(Level.SEVERE, "Failed to load images or log", e);
+                    showAlert(Alert.AlertType.ERROR, "Failed to load images or log for item: " + newItem.getOrderItem());
                 }
             } else {
                 clearImages();
@@ -309,7 +322,8 @@ public class QcController implements Initializable {
 
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.log(Level.SEVERE, "Failed to dye item or anything else", e);
+                    showAlert( Alert.AlertType.ERROR, "Something went wrong while processing item: " + item.getOrderItem());
                 }
             }
         });
@@ -422,31 +436,11 @@ public class QcController implements Initializable {
         lstLog.scrollTo(logItems.size() - 1);
     }
 
-    private void appendLog(int orderItemId, String position, String action, String user) throws Exception {
-        Log newLog = logModel.addLog(orderItemId, position, action, user);
 
-        logItems.add(formatLogEntry(newLog));
-        lstLog.scrollTo(logItems.size() - 1);
-    }
-
-    private String formatLogEntry(Log log) {
-        String timestamp = log.getTimestamp().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-
-        String itemNumber = lstItem.getItems().stream()
-                .filter(item -> item.getOrderItemId() == log.getOrderItemID())
-                .findFirst()
-                .map(OrderItem::getOrderItem)
-                .orElse("Unknown Item");
-        return String.format("%s image %s → %s on item %s by %s",
-                timestamp,
-                log.getImagePosition(),
-                log.getAction(),
-                itemNumber,
-                log.getUsername());
-    }
 
 
     private void showImageForPosition(Position position) {
+
         StackPane cell = getPaneByPosition.get(position);
         cell.getChildren().clear();
 
@@ -563,6 +557,29 @@ public class QcController implements Initializable {
         imageView.setOnMouseClicked(event -> openImageHandlingScene(img));
 
         imageFront.getChildren().setAll(imageView);
+    }
+
+    private void appendLog(int orderItemId, String position, String action, String user) throws Exception {
+        Log newLog = logModel.addLog(orderItemId, position, action, user);
+
+        logItems.add(formatLogEntry(newLog));
+        lstLog.scrollTo(logItems.size() - 1);
+    }
+
+    private String formatLogEntry(Log log) {
+        String timestamp = log.getTimestamp().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+
+        String itemNumber = lstItem.getItems().stream()
+                .filter(item -> item.getOrderItemId() == log.getOrderItemID())
+                .findFirst()
+                .map(OrderItem::getOrderItem)
+                .orElse("Unknown Item");
+        return String.format("%s image %s → %s on item %s by %s",
+                timestamp,
+                log.getImagePosition(),
+                log.getAction(),
+                itemNumber,
+                log.getUsername());
     }
 
 
