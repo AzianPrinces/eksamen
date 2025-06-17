@@ -274,8 +274,8 @@ public class QcController implements Initializable {
             if (newItem != null) {
 
                 try {
-                    loadImagesForItem(newItem.getOrderItemId());
                     loadLogList(newItem.getOrderItemId());
+                    loadImagesForItem(newItem.getOrderItemId());
                 } catch (Exception e) {
                     logger.log(Level.SEVERE, "Failed to load images or log", e);
                     showAlert(Alert.AlertType.ERROR, "Failed to load images or log for item: " + newItem.getOrderItem());
