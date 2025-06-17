@@ -25,8 +25,8 @@ public class ImageModel {
         imageManager.deleteImage(img);
     }
 
-    public List<MyImage> getImageForOrder(int orderID) throws Exception {
-        return imageManager.getImagesForOrder(orderID);
+    public List<MyImage> getImageForOrderItem(int orderID) throws Exception {
+        return imageManager.getImagesForOrderItem(orderID);
     }
 
     public void updateComment(MyImage img) throws Exception {
@@ -39,9 +39,9 @@ public class ImageModel {
         imageManager.updateItemStatus(orderItemID, validationTypeID);
     }*/
 
-    public int getValidationType(int orderItemID) throws Exception {
-        return imageManager.getValidationType(orderItemID);
-    }
+//    public int getValidationType(int orderItemID) throws Exception {
+//        return imageManager.getValidationType(orderItemID);
+//    }
 
     public void updateImageStatus(int imageID, int validationTypeID) throws Exception {
         imageManager.updateImageStatus(imageID, validationTypeID);

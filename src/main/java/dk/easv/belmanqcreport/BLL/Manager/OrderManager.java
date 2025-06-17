@@ -20,15 +20,15 @@ public class OrderManager {
     public List<Order> getAllOrders() throws Exception {
         return orderRepository.getAll();
     }
-    public Order createOrders(Order order) throws Exception {
-        return orderRepository.add(order);
-    }
-    public Order updateOrders(Order order) throws Exception {
-        return orderRepository.update(order);
-    }
-    public void deleteOrders(Order order) throws Exception {
-        orderRepository.delete(order);
-    }
+//    public Order createOrders(Order order) throws Exception {
+//        return orderRepository.add(order);
+//    }
+//    public Order updateOrders(Order order) throws Exception {
+//        return orderRepository.update(order);
+//    }
+//    public void deleteOrders(Order order) throws Exception {
+//        orderRepository.delete(order);
+//    }
     public List<OrderItem> getItemsByOrderID(int orderID) throws Exception {
        return orderRepository.getItemsByOrderID(orderID);
     }

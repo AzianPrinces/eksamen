@@ -609,7 +609,7 @@ public class OperatorMainController {
 
     private void loadImagesForItem(int orderItemID) {
         try{
-            List<MyImage> imgs = imageModel.getImageForOrder(orderItemID);
+            List<MyImage> imgs = imageModel.getImageForOrderItem(orderItemID);
 
             System.out.println("DEBUG: loadImagesForItem(" + orderItemID + ") → " + imgs.size() + " images");
             imagesByPosition.clear();

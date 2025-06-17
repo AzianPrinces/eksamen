@@ -25,9 +25,9 @@ public class ImageHandlingModel {
         return orderManager.getItemsByOrderID(orderID);
     }
 
-    public void updateOrder(Order order) throws Exception {
-        orderManager.updateOrders(order);
-    }
+//    public void updateOrder(Order order) throws Exception {
+//        orderManager.updateOrders(order);
+//    }
 
     public Optional<Order> findOrderByNumber(String orderNumber) throws Exception {
         return orderManager.getOrderByNumber(orderNumber);

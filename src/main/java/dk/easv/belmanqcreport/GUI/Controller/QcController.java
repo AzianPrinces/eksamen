@@ -231,19 +231,16 @@ public class QcController implements Initializable {
 
     private void populateLists() throws Exception {
 
-        List<Order> orders;
-
-        orders = imageHandlingModel.getAllOrders();
-
+        List<Order> orders = imageHandlingModel.getAllOrders();
         lstOrder.getItems().setAll(orders);
 
-        lstOrder.setCellFactory(lv -> new ListCell<>() {
-            @Override
-            protected void updateItem(Order o, boolean empty) {
-                super.updateItem(o, empty);
-                setText(empty || o == null ? null : o.getOrderNumber());
-            }
-        });
+//        lstOrder.setCellFactory(lv -> new ListCell<>() {
+//            @Override
+//            protected void updateItem(Order o, boolean empty) {
+//                super.updateItem(o, empty);
+//                setText(empty || o == null ? null : o.getOrderNumber());
+//            }
+//        });
 
         lstOrder.getSelectionModel().selectedItemProperty().addListener((obs, oldOrder, selOrder) -> {
             if (selOrder != null) {
@@ -251,17 +248,18 @@ public class QcController implements Initializable {
                 try {
                     List<OrderItem> items = imageHandlingModel.getItemsByOrderID(selOrder.getOrderID());
                     lstItem.getItems().setAll(items);
-
-                    //fetching from db
-                    for (OrderItem item : lstItem.getItems()) {
-                        int validType = imageModel.getValidationType(item.getOrderItemId());
-                        if (validType == ValidationType.APPROVED.getId()) {
-                            approvedItems.add(item);
-                        } else if (validType == ValidationType.DENIED.getId()) {
-                            deniedItems.add(item);
-                        }
-                    }
                     lstItem.refresh();
+
+//                    //fetching from db
+//                    for (OrderItem item : lstItem.getItems()) {
+//                        int validType = imageModel.getValidationType(item.getOrderItemId());
+//                        if (validType == ValidationType.APPROVED.getId()) {
+//                            approvedItems.add(item);
+//                        } else if (validType == ValidationType.DENIED.getId()) {
+//                            deniedItems.add(item);
+//                        }
+//                    }
+
 
                 } catch (Exception e) {
                     logger.log(Level.SEVERE, "Failed to load items", e);
@@ -301,7 +299,7 @@ public class QcController implements Initializable {
                 setText(item.getOrderItem());
 
                 try {
-                    List<MyImage> images = imageModel.getImageForOrder(item.getOrderItemId());
+                    List<MyImage> images = imageModel.getImageForOrderItem(item.getOrderItemId());
 
                     if (images.isEmpty()) {
                         setStyle("");
@@ -329,11 +327,34 @@ public class QcController implements Initializable {
         });
     }
 
+    private void loadLogList(int orderItemId) throws Exception {
+        logItems.clear();
+
+        for(Log log : logModel.getLogsForItem(orderItemId)){
+
+            String itemNumber = lstItem.getItems().stream()
+                    .filter(item -> item.getOrderItemId() == log.getOrderItemID())
+                    .findFirst()
+                    .map(OrderItem::getOrderItem)
+                    .orElse("Unknown Item");
+
+            logItems.add(String.format(
+                    "%s image %s → %s on item %s by %s",
+                    log.getTimestamp().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+                    log.getImagePosition(),
+                    log.getAction(),
+                    itemNumber,
+                    log.getUsername()
+            ));
+        }
+        lstLog.scrollTo(logItems.size() - 1);
+    }
+
 
 
     private void loadImagesForItem(int orderItemId) {
         try {
-            List<MyImage> images = imageModel.getImageForOrder(orderItemId);
+            List<MyImage> images = imageModel.getImageForOrderItem(orderItemId);
 
             imagesByPosition.clear();
 
@@ -413,28 +434,7 @@ public class QcController implements Initializable {
         }
     }
 
-    private void loadLogList(int orderItemId) throws Exception {
-        logItems.clear();
 
-        for(Log log : logModel.getLogsForItem(orderItemId)){
-
-            String itemNumber = lstItem.getItems().stream()
-                    .filter(item -> item.getOrderItemId() == log.getOrderItemID())
-                    .findFirst()
-                    .map(OrderItem::getOrderItem)
-                    .orElse("Unknown Item");
-
-            logItems.add(String.format(
-                    "%s image %s → %s on item %s by %s",
-                    log.getTimestamp().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
-                    log.getImagePosition(),
-                    log.getAction(),
-                    itemNumber,
-                    log.getUsername()
-            ));
-        }
-        lstLog.scrollTo(logItems.size() - 1);
-    }
 
 
 

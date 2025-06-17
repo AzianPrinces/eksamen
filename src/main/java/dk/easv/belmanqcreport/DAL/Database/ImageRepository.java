@@ -98,7 +98,7 @@ public class ImageRepository implements IRepository<MyImage> {
         return list;
     }
 
-    public List<MyImage> getImagesByOrderId(int orderItemID) throws Exception {
+    public List<MyImage> getImagesByOrderItemId(int orderItemID) throws Exception {
         String sql = "SELECT imageID, imagePath, comment, imagePositionID, validationTypeID FROM Image WHERE orderItemID = ?;";
         List<MyImage> list = new ArrayList<>();
 
@@ -139,21 +139,21 @@ public class ImageRepository implements IRepository<MyImage> {
         }
     }*/
 
-    public int getValidationTypeByOrderItemID(int orderItemID) throws SQLException {
-
-        String sql = "SELECT validationTypeID FROM Item WHERE orderItemID = ?;";
-
-        try (Connection conn = dbConnection.getConnection();
-
-            PreparedStatement stmt = conn.prepareStatement(sql) ) {
-            stmt.setInt(1, orderItemID);
-
-            try (ResultSet rs = stmt.executeQuery() ) {
-                if (rs.next()) return rs.getInt("validationTypeID");
-            }
-        }
-        return ValidationType.AWAITING.getId();
-    }
+//    public int getValidationTypeByOrderItemID(int orderItemID) throws SQLException {
+//
+//        String sql = "SELECT validationTypeID FROM Item WHERE orderItemID = ?;";
+//
+//        try (Connection conn = dbConnection.getConnection();
+//
+//            PreparedStatement stmt = conn.prepareStatement(sql) ) {
+//            stmt.setInt(1, orderItemID);
+//
+//            try (ResultSet rs = stmt.executeQuery() ) {
+//                if (rs.next()) return rs.getInt("validationTypeID");
+//            }
+//        }
+//        return ValidationType.AWAITING.getId();
+//    }
 
     public void updateImageValidationType(int imageID, int validationTypeID) throws SQLException {
         String sql = "UPDATE Image SET validationTypeID = ? WHERE imageID = ?;";

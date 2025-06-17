@@ -315,15 +315,15 @@
                             List<OrderItem> items = imageHandlingModel.getItemsByOrderID(selOrder.getOrderID());
                             lstItem.getItems().setAll(items);
 
-                            //fetching from db
-                            for (OrderItem item : lstItem.getItems()) {
-                                int validType = imageModel.getValidationType(item.getOrderItemId());
-                                if (validType == ValidationType.APPROVED.getId()) {
-                                    approvedItems.add(item);
-                                } else if (validType == ValidationType.DENIED.getId()) {
-                                    deniedItems.add(item);
-                                }
-                            }
+//                            //fetching from db
+//                            for (OrderItem item : lstItem.getItems()) {
+//                                int validType = imageModel.getValidationType(item.getOrderItemId());
+//                                if (validType == ValidationType.APPROVED.getId()) {
+//                                    approvedItems.add(item);
+//                                } else if (validType == ValidationType.DENIED.getId()) {
+//                                    deniedItems.add(item);
+//                                }
+//                            }
                             lstItem.refresh(); //
 
                         } catch (Exception e) {
@@ -357,7 +357,7 @@
                         setText(item.getOrderItem());
 
                         try {
-                            List<MyImage> images = imageModel.getImageForOrder(item.getOrderItemId());
+                            List<MyImage> images = imageModel.getImageForOrderItem(item.getOrderItemId());
 
                             if (images.isEmpty()) {
                                 setStyle("");
